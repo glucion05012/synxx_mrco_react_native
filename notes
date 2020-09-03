@@ -1,0 +1,10 @@
+//read all
+$route['read'] = 'apicontroller/readall';
+//read one
+$route['read/(:num)'] = 'apicontroller/read/$1';
+//create
+$route['create'] = 'apicontroller/create';
+//update
+$route['update/(:num)'] = 'apicontroller/update/$1';
+//delete
+$route['delete/(:num)'] = 'apicontroller/delete/$1';

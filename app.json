@@ -1,0 +1,16 @@
+{
+  "name": "sample_react_native",
+  "displayName": "sample_react_native",
+  "expo": {
+    "name": "sample_react_native",
+    "slug": "sample_react_native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.syxx.mrlc",
+      "versionCode": 1
+    }
+  }
+}
