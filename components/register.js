@@ -15,26 +15,11 @@ export default class Register extends Component {
             email: '',
             password: '',
             
-
             //validation
             nameError: '',
             emailError: '',
             passwordError: '',
         }
-    }
-
-    componentDidMount(){
-        this._isMounted = true;
-        axios.get('http://dummy.restapiexample.com/api/v1/employee/2')
-            .then(response => {
-                
-                this.setState({
-                    isLoading: false,
-                    name: response.data.message,
-                })
-            }).catch(err => {
-                console.warn(err);
-              });
     }
 
     validate = () => {
@@ -73,7 +58,27 @@ export default class Register extends Component {
         const isValid = this.validate();
         if (isValid) {
             
-            alert('gana');
+            axios.post('http://loginapi.foursquare.org.ph/create/'+ this.state.name +'/'+this.state.email +'/'+this.state.password)
+                .then(response => {
+                    this.setState({
+                        isLoading: false,
+                        dataSource: response.data
+                    })
+                }) 
+           
+            alert('You have successfully registered\n'+this.state.name+'!');
+
+            this.setState({
+
+                name: '',
+                email: '',
+                password: '',
+
+                 //validation
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+            })
             
         }
     
