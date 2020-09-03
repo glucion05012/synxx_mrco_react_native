@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { styles } from '../src/styles/styles.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 
 export default class Register extends Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
 
         this.state = {
+
             name: '',
             email: '',
             password: '',
@@ -18,6 +21,20 @@ export default class Register extends Component {
             emailError: '',
             passwordError: '',
         }
+    }
+
+    componentDidMount(){
+        this._isMounted = true;
+        axios.get('http://dummy.restapiexample.com/api/v1/employee/2')
+            .then(response => {
+                
+                this.setState({
+                    isLoading: false,
+                    name: response.data.message,
+                })
+            }).catch(err => {
+                console.warn(err);
+              });
     }
 
     validate = () => {
@@ -62,6 +79,9 @@ export default class Register extends Component {
     
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     render() {
         return (
             <View style={{
@@ -72,6 +92,7 @@ export default class Register extends Component {
                 <View>
                     <Icon  style={{alignSelf : "center", marginTop:10}} name="id-card-o" size={50} color="#FC7112"/>
                     <Text style={{alignSelf : "center" }} >Personal Details</Text>
+                    
                 </View>
                 
                 <View>   
