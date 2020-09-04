@@ -6,6 +6,7 @@ import { crerateStackNavigator, createStackNavigator } from 'react-navigation-st
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import Overview from "./components/menu/overview";
 
 
 const Navigator = createStackNavigator({
@@ -17,6 +18,9 @@ const Navigator = createStackNavigator({
   },
   Register:{
     screen: Register
+  },
+  Overview:{
+    screen: Overview
   }
 })
 export default createAppContainer(Navigator)

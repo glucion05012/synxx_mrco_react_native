@@ -15,9 +15,11 @@ export default class Login extends Component {
             password: '',
         }
     }
-   
-    submitLogin(){
 
+    submitLogin(){
+        if (this.state.email.length < 8 || this.state.password < 8 ) {
+            alert('Please enter a valid username and password!');
+        }else{
         axios.get('http://loginapi.foursquare.org.ph/readone/'+ this.state.email)
                 .then(response => {
                     // this.setState({
@@ -27,18 +29,23 @@ export default class Login extends Component {
                     // })
                 
                     if(this.state.email === response.data[0].email && this.state.password === response.data[0].password){
-                        alert ('Welcome '+ response.data[0].name);
+                       
                         this.setState({
     
                             name: '',
                             email: '',
                             password: '',
                         })
+
+                        this.props.navigation.navigate("Overview")
                     }else{
                         alert ('Invalid email and password!');
                     }
                     
-                }) 
+                }) .catch((err) => {
+                    alert('Please enter a valid username and password!');
+                })
+        }
     }
 
     render() {
