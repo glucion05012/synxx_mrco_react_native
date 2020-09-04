@@ -46,7 +46,7 @@ export default class App extends Component{
     return(
       <NavigationContainer>
         {/*edgeWidth={0} */}
-         <Drawer.Navigator initialRouteName={Home} edgeWidth={0}>
+         <Drawer.Navigator initialRouteName={Home} >
           <Drawer.Screen name="Logout" 
                           children={createHomeStack}
                           options={{
