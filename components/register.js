@@ -84,9 +84,7 @@ export default class Register extends Component {
     
     }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
+
     render() {
         return (
             <View style={{

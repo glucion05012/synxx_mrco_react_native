@@ -2,24 +2,45 @@ import React, { Component } from 'react';
 import { View, Image, TextInput, TouchableOpacity, Text, Alert, Linking, CheckBox  } from 'react-native';
 import { styles } from '../src/styles/styles.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
 
 export default class Login extends Component {
+    _isMounted = false;
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoading: true,
+            name: '',
+            email: '',
+            password: '',
+        }
+    }
    
-    createTwoButtonAlert = () =>
-    Alert.alert(
-      "Notification",
-      "You clicked login button",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ],
-      { cancelable: false }
-    );
+    submitLogin(){
+
+        axios.get('http://loginapi.foursquare.org.ph/readone/'+ this.state.email)
+                .then(response => {
+                    // this.setState({
+                    //     isLoading: false,
+                    //     name: response.data[0].name,
+                    //     password: response.data[0].password,
+                    // })
+                
+                    if(this.state.email === response.data[0].email && this.state.password === response.data[0].password){
+                        alert ('Welcome '+ response.data[0].name);
+                        this.setState({
     
+                            name: '',
+                            email: '',
+                            password: '',
+                        })
+                    }else{
+                        alert ('Invalid email and password!');
+                    }
+                    
+                }) 
+    }
+
     render() {
         return (
             <View style={{
@@ -52,7 +73,10 @@ export default class Login extends Component {
                         underlineColorAndroid = "transparent"
                         placeholder = "Email"
                         placeholderTextColor = "gray"
-                        autoCapitalize = "none"/>
+                        autoCapitalize = "none"
+                        onChangeText={(text) => { this.setState({ email: text }) }}
+                        value={this.state.email}
+                        />
                     </View>
                     <View >
                         <TextInput style = {styles.input}
@@ -60,7 +84,10 @@ export default class Login extends Component {
                         placeholder = "Password"
                         secureTextEntry={true}
                         placeholderTextColor = "gray"
-                        autoCapitalize = "none"/>
+                        autoCapitalize = "none"
+                        onChangeText={(text) => { this.setState({ password: text }) }}
+                        value={this.state.password}
+                        />
                     </View>
 
                     <View style={{
@@ -85,7 +112,7 @@ export default class Login extends Component {
                     <View>
                         <TouchableOpacity
                         style = {styles.submitButton}
-                        onPress = {this.createTwoButtonAlert}
+                        onPress={() => { this.submitLogin() }}
                         >
                             <Text style = {styles.submitButtonText}> Log In </Text>
                         </TouchableOpacity>
